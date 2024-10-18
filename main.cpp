@@ -234,7 +234,12 @@ public: // Variables/Functions that can be accessed outside of the class
 };
 
 int main() {
-    
+    // Demonstrates the "every_other_element" method
+    DoublyLinkedList list; // create new dll
+    for (int i = 0; i < 10; i++){ // iterate 10 times with i going from 0-9
+        list.push_back(i); // add new node to list with data set to the node's index
+    }
+    list.every_other_element(); // output the even indexed nodes in list
     
     return 0;
 }
