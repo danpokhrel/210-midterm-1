@@ -2,9 +2,9 @@
 #include <iostream> // for cin and cout
 using namespace std; // so that we don't have to use "std::" before the imported functions
 
-const int MIN_NR = 10, MAX_NR = 99, MIN_LS = 5, MAX_LS = 20;
+const int MIN_NR = 10, MAX_NR = 99, MIN_LS = 5, MAX_LS = 20; // constants that aren't used
 
-class DoublyLinkedList {
+class DoublyLinkedList { // A class object that contains functionality for a doubly linked list
 private: // Variables here cannot be accessed outside of the class
     // Node of a linked list, it holds some data plus pointers to the nodes following and preceding it
     struct Node {
@@ -191,36 +191,50 @@ public: // Variables/Functions that can be accessed outside of the class
         }
     }
 
-    void print() { // 
-        Node* current = head;
-        if (!current) {
+    void print() { // Outputs the data for all nodes in the list to the console
+        Node* current = head; // pointer that's set to point to the head node
+        if (!current) { // head is a null pointer, ie the list is empty
             cout << "List is empty." << endl;
-            return;
+            return; // return to where this function was called
         }
-        while (current) {
-            cout << current->data << " ";
-            current = current->next;
+        while (current) { // loops through all nodes in list
+            cout << current->data << " "; // outputs the data in the current node with one space after
+            current = current->next; // sets current to point to the node after current
         }
-        cout << endl;
+        cout << endl; // goes to newline on console
     }
 
-    void print_reverse() {
-        Node* current = tail;
-        if (!current) { 
+    void print_reverse() { // Outputs the data for all nodes in the list to the console in reverse order
+        Node* current = tail; // pointer that's set to point to the tail node
+        if (!current) {  // tail is a null pointer, ie the list is empty
             cout << "List is empty." << endl;
-            return;
+            return; // return to where this function was called
         }
-        while (current) {
-            cout << current->data << " ";
-            current = current->prev;
+        while (current) { // loops through all nodes in list from tail to head
+            cout << current->data << " "; // outputs the data in the current node with one space after
+            current = current->prev; // sets current to point to the node before current
         }
-        cout << endl;
+        cout << endl; // goes to newline on console
+    }
+
+    void every_other_element() { // outputs the data for all the even indexed nodes starting from 0
+        Node* current = head; // pointer that's set to point to the head node
+        if (!current) {  // head is a null pointer, ie the list is empty
+            cout << "List is empty." << endl;
+            return; // return to where this function was called
+        }
+
+        while (current){ // loops through nodes in list skipping the odd indexed nodes
+            cout << current->data << " "; // outputs the data in the current node with one space after
+            current = current->next; // sets current to point to the node after current
+            if (current) // the new current node exists
+                current = current->next; // moves current to point to the next node again
+        }
     }
 };
 
 int main() {
-    cout << MIN_NR + MIN_LS + MAX_NR + MAX_LS;  // dummy statement to avoid compiler warning
-
+    
     
     return 0;
 }
