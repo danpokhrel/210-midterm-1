@@ -45,32 +45,35 @@ public: // Variables/Functions that can be accessed outside of the class
         Node* temp = head; // A temporary variable that is a pointer to the head node\
         // Iterates through list until it reaches the node at "position" or until the end of the list
         for (int i = 0; i < position && temp; ++i) 
-            temp = temp->next;
+            temp = temp->next; // sets tmp to point to the node that comes after the node it's currently pointing to
 
-        if (!temp) {
+        if (!temp) { // tmp is a null pointer, which means the previous loop went past the last node
             cout << "Position exceeds list size. Node not inserted.\n";
-            delete newNode;
-            return;
+            delete newNode; // deallocates memory occupied by newNode
+            return; // returns code execution to where the function was called
         }
 
-        newNode->next = temp->next;
-        newNode->prev = temp;
-        if (temp->next)
-            temp->next->prev = newNode;
-        else
-            tail = newNode;
-        temp->next = newNode;
+        // This codeblock inserts newNode between tmp and the node after temp
+        newNode->next = temp->next; // Sets newNode's next pointer to point to the node after temp
+        newNode->prev = temp; // Sets newNode's previous pointer to point to temp
+        if (temp->next) // if there exists a node after temp
+            temp->next->prev = newNode; // sets the previous of the node after temp to point to newNode
+        else // there is no node after temp; ie it's a tail node
+            tail = newNode; // update's tail to point to newNode
+        temp->next = newNode; // Sets temp's next to point to newNode
     }
 
-    void delete_val(int value) {
-        if (!head) return;
+    void delete_val(int value) { // Deletes the first node whose data is equal to "value"
+        if (!head) return; // Don't do anything if the list is empty
 
-        Node* temp = head;
+        Node* temp = head; // A temporary variable that points to the head of the list
         
-        while (temp && temp->data != value)
-            temp = temp->next;
+        // Iterate through list until it reaches the node with data equal to "value" or until the end of the list
+        while (temp && temp->data != value) 
+            temp = temp->next; // Moves temp pointer to the node that comes after temp
 
-        if (!temp) return; 
+        // temp is a null pointer, which means the desired node wasn't found, and return to where this function was called
+        if (!temp) return;
 
         if (temp->prev)
             temp->prev->next = temp->next;
