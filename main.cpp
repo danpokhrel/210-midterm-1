@@ -31,18 +31,20 @@ public: // Variables/Functions that can be accessed outside of the class
     void insert_after(int value, int position) {
         if (position < 0) { // Checks for invalid index value
             cout << "Position must be >= 0." << endl;
-            return;
+            return; // If invalid, code execution stops here and returns to where the function was called
         }
 
         // Uses dynamic memory allocation to create a new node variable with data set to "value"
         Node* newNode = new Node(value);
-        if (!head) {
+        if (!head) { // If head is nullptr; i.e. there isn't a head node; the list is empty
+            // Sets the head and tail pointers to point to this new node and returns to where this function was called
             head = tail = newNode;
             return;
         }
 
-        Node* temp = head;
-        for (int i = 0; i < position && temp; ++i)
+        Node* temp = head; // A temporary variable that is a pointer to the head node\
+        // Iterates through list until it reaches the node at "position" or until the end of the list
+        for (int i = 0; i < position && temp; ++i) 
             temp = temp->next;
 
         if (!temp) {
