@@ -5,30 +5,36 @@ using namespace std;
 const int MIN_NR = 10, MAX_NR = 99, MIN_LS = 5, MAX_LS = 20;
 
 class DoublyLinkedList {
-private:
+private: // Variables here cannot be accessed outside of the class
+    // Node of a linked list, it holds some data plus pointers to the nodes following and preceding it
     struct Node {
-        int data;
-        Node* prev;
-        Node* next;
+        int data; // The data stored in this node
+        Node* prev; // pointer to the node the comes before this node
+        Node* next; // pointer to the node that comes after this node
+        // Constructor
         Node(int val, Node* p = nullptr, Node* n = nullptr) {
+            // Sets the node's variables to the parameters that were accessed during construction
             data = val; 
             prev = p;
             next = n;
         }
     };
 
-    Node* head;
-    Node* tail;
+    Node* head; // Pointer to the first node in the list
+    Node* tail; // Pointer to the last node in the list
 
-public:
+public: // Variables/Functions that can be accessed outside of the class
+    // Default constructor, used when no parameters are given, sets the head and tail pointers to null pointer
     DoublyLinkedList() { head = nullptr; tail = nullptr; }
 
+    // Inserts a node with data set to "value" after the node at the index "position"
     void insert_after(int value, int position) {
-        if (position < 0) {
+        if (position < 0) { // Checks for invalid index value
             cout << "Position must be >= 0." << endl;
             return;
         }
 
+        // Uses dynamic memory allocation to create a new node variable with data set to "value"
         Node* newNode = new Node(value);
         if (!head) {
             head = tail = newNode;
