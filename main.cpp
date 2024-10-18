@@ -1,6 +1,6 @@
 // COMSC-210 | Midterm 1 | Dan Pokhrel
-#include <iostream>
-using namespace std;
+#include <iostream> // for cin and cout
+using namespace std; // so that we don't have to use "std::" before the imported functions
 
 const int MIN_NR = 10, MAX_NR = 99, MIN_LS = 5, MAX_LS = 20;
 
@@ -138,58 +138,60 @@ public: // Variables/Functions that can be accessed outside of the class
     }
     
     void push_front(int v) { // add new node with data set to "v" at the beginning of the list
-        Node* newNode = new Node(v);
-        if (!head)
-            head = tail = newNode;
-        else {
-            newNode->next = head;
-            head->prev = newNode;
-            head = newNode;
+        Node* newNode = new Node(v); // dynamically allocates a new node with data set to "v"
+        if (!head) // if list is empty
+            head = tail = newNode; // sets head and tail to point to this new node
+        else { // list is not empty
+            newNode->next = head; // sets the next of the new node to point to the head
+            head->prev = newNode; // sets the prev of the head to point to the new node
+            head = newNode; // updates the head to point to the new node
         }
     }
     
-    void pop_front() {
+    void pop_front() { // deletes the head node
 
-        if (!head) {
+        if (!head) { // if list is empty
             cout << "List is empty." << endl;
-            return;
+            return; // return to where this function was called
         }
 
-        Node * temp = head;
+        Node * temp = head; // temporary variable that points to the head node
 
-        if (head->next) {
-            head = head->next;
-            head->prev = nullptr;
+        if (head->next) { // if there is a node after the head
+            head = head->next; // sets head to point to node after the head
+            head->prev = nullptr; // sets the prev of the new head to null pointer
         }
-        else
-            head = tail = nullptr;
-        delete temp;
+        else // there is not node after head, ie the list has one node
+            head = tail = nullptr; // sets head and tail to null pointer
+        delete temp; // deallocates the node pointed to by temp, ie the head
     }
 
-    void pop_back() {
-        if (!tail) {
-            cout << "List is empty." << endl;
-            return;
+    void pop_back() { // deletes the tail node
+        if (!tail) { // if list is empty
+            cout << "List is empty." << endl; 
+            return; // return to where this function was called
         }
-        Node * temp = tail;
+        Node * temp = tail; // temporary variable that points to the tail node
 
-        if (tail->prev) {
-            tail = tail->prev;
-            tail->next = nullptr;
+        if (tail->prev) { // if there is a node before the tail
+            tail = tail->prev; // sets the tail variable to point to the node before the tail
+            tail->next = nullptr; // sets the new tail's next to null pointer
         }
-        else
-            head = tail = nullptr;
-        delete temp;
+        else // there is no node before the tail; ie there is one node in the list
+            head = tail = nullptr; // sets head and tail to null pointer
+        delete temp; // deallocates the node pointed to by temp, ie the tail
     }
 
+    // destructor; called automatically when the object is being destroyed
     ~DoublyLinkedList() {
-        while (head) {
-            Node* temp = head;
-            head = head->next;
-            delete temp;
+        while (head) { // loops through all nodes in the list
+            Node* temp = head; // temporary variable pointing to the head
+            head = head->next; // sets head to point to the next node after the head
+            delete temp; // deallocates the old head node
         }
     }
-    void print() {
+
+    void print() { // 
         Node* current = head;
         if (!current) {
             cout << "List is empty." << endl;
