@@ -75,68 +75,69 @@ public: // Variables/Functions that can be accessed outside of the class
         // temp is a null pointer, which means the desired node wasn't found, and return to where this function was called
         if (!temp) return;
 
-        if (temp->prev)
-            temp->prev->next = temp->next;
-        else
-            head = temp->next; 
+        // This code block reroutes the prev and next pointers for the nodes around temp
+        if (temp->prev) // if there is a node before temp
+            temp->prev->next = temp->next; // set the next of the node before temp to point to the node after temp
+        else // if temp is pointing to the first node
+            head = temp->next; // set head to point to the node after temp
 
-        if (temp->next)
-            temp->next->prev = temp->prev;
-        else
-            tail = temp->prev; 
+        if (temp->next) // if there is a node after temp
+            temp->next->prev = temp->prev; // set the prev of the node after temp to point to the node before temp
+        else // if temp is pointing to the last node
+            tail = temp->prev; // set tail to point to the node before temp
 
-        delete temp;
+        delete temp; // deallocates the node pointed to by temp
     }
 
-    void delete_pos(int pos) {
-        if (!head) {
+    void delete_pos(int pos) { // Deletes the node at index "pos"
+        if (!head) { // if list is empty
             cout << "List is empty." << endl;
-            return;
+            return; // return to where this function was called
         }
     
-        if (pos == 1) {
-            pop_front();
-            return;
+        if (pos == 1) { // Wants to delete the first node in list
+            pop_front(); // deletes the first node
+            return; // returns to where this function was called
         }
     
-        Node* temp = head;
+        Node* temp = head; // a temporay variable that points to the head node
     
-        for (int i = 1; i < pos; i++){
-            if (!temp) {
+        for (int i = 1; i < pos; i++){ // Loops through the list until the node at index "pos" is reached
+            if (!temp) { // went past the end of the list
                 cout << "Position doesn't exist." << endl;
-                return;
+                return; // returns to where this function was called
             }
-            else
-                temp = temp->next;
+            else // within the list
+                temp = temp->next; // move temp to point to the node after temp
         }
-        if (!temp) {
+        if (!temp) { // went past the end of the list
             cout << "Position doesn't exist." << endl;
-            return;
+            return; // returns to where this function was called
         }
     
-        if (!temp->next) {
-            pop_back();
-            return;
+        if (!temp->next) { // there is no node after temp; ie temp points to the tail
+            pop_back(); // delete the tail node
+            return; // return to where this function was called
         }
     
-        Node* tempPrev = temp->prev;
-        tempPrev->next = temp->next;
-        temp->next->prev = tempPrev;
-        delete temp;
+        Node* tempPrev = temp->prev; // new variable pointing to the node before temp
+        tempPrev->next = temp->next; // sets the next pointer of the node before temp to point to the node after temp
+        temp->next->prev = tempPrev; // sets the prev pointer of the node after temp to point to the node before temp
+        delete temp; // deallocates the node pointed to by temp
     }
 
-    void push_back(int v) {
-        Node* newNode = new Node(v);
-        if (!tail)
-            head = tail = newNode;
-        else {
-            tail->next = newNode;
-            newNode->prev = tail;
-            tail = newNode;
+    void push_back(int v) { // adds new node with data set to "v" at the end of the list
+        Node* newNode = new Node(v); // dynamically allocates a new node with data set to "v"
+        if (!tail) // if list is empty
+            head = tail = newNode; // sets head and tail to point to this new node
+        else { // list is not empty
+            tail->next = newNode; // sets the next of the tail node to point to this new node
+            newNode->prev = tail; // sets prev of new node to point to the tail node
+            tail = newNode; // updates the tail to point to the new node
         }
     }
     
-    void push_front(int v) {
+    void push_front(int v) { // add new node with data set to "v" at the beginning of the list
         Node* newNode = new Node(v);
         if (!head)
             head = tail = newNode;
